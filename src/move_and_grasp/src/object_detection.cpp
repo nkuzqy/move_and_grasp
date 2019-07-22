@@ -36,7 +36,7 @@ Author: Xu Yucheng
 #include <actionlib/client/simple_action_client.h>
 
 // user-defined ROS message type
-#include <kamerider_image_msgs/ObjectPosition.h>
+#include <move_and_grasp/ObjectPosition.h>
 
 using namespace std;
 using namespace pcl;
@@ -177,7 +177,7 @@ private:
             geometry_msgs::PointStamped base_point;
             cam_pos.header.frame_id = "/astra_depth_optical_frame";
             origin_index = object_y * camera_width + object_x;
-            kamerider_image_msgs::ObjectPosition pos;
+            move_and_grasp::ObjectPosition pos;
             tf::TransformListener pListener;
 
             if (isnan(cloud_astra->points[origin_index].x) || 
@@ -252,7 +252,7 @@ public:
 
         pcl_sub = nh.subscribe(sub_pcl_topic_name, 1, &object_detection::pclCallback, this);
         img_sub = nh.subscribe(sub_image_raw_topic_name, 1, &object_detection::imageCallback, this);  
-        obj_pub = nh.advertise<kamerider_image_msgs::ObjectPosition>(pub_object_pos_topic_name, 1);        
+        obj_pub = nh.advertise<move_and_grasp::ObjectPosition>(pub_object_pos_topic_name, 1);        
         std::cout << "Receving message from topics: " << std::endl;
         std::cout << "--------------------------" << std::endl;
         std::cout << "\t" << sub_pcl_topic_name << std::endl;
