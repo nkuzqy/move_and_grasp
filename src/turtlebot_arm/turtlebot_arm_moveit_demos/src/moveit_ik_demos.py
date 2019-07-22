@@ -97,8 +97,8 @@ class MoveItDemo:
         #rospy.loginfo("ready")
                
         # Set the target pose.  This particular pose has the gripper oriented horizontally
-        # 0.85 meters above the ground, 0.10 meters to the right and 0.20 meters ahead of 
-        # the center of the robot base.
+        # 0.7166 meters above the ground, 0.01619 meters to the right and 0.3456 meters ahead of 
+        # the center of the robot top plate link.
         target_pose = PoseStamped()
         target_pose.header.frame_id = reference_frame
         target_pose.header.stamp = rospy.Time.now()     
@@ -140,6 +140,8 @@ class MoveItDemo:
        
         # Set target joint values for the arm: joints are in the order they appear in
         # the kinematic tree.
+        #Also change according to your needs
+        #Try using get_arm_posees.py
         joint_positions = [0, 0, 1.3, 0, 0]
  
         # Set the arm's goal configuration to the be the joint positions

@@ -1,7 +1,7 @@
 # Move_and_grasp
 The whole ROS workspace for move and adjust robot to grasp objects
 
----
+
 ## Prerequirements
 
 moveIt!
@@ -16,7 +16,7 @@ http://robotforall.org/wiki/index.php?title=Vision_System_Setup
 
 http://robotforall.org/wiki/index.php?title=TurtleBot_Arm_setup
 
----
+
 ## Usage
 
 bringup the TurtleBot, astra and arm:
