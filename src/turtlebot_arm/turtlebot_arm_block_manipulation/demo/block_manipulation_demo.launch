@@ -1,0 +1,35 @@
+<launch>
+  <arg name="publish_camera_tf" default="true"/>
+
+  <include file="$(find turtlebot_bringup)/launch/3dsensor.launch">
+    <arg name="camera"                          value="camera"/>
+    <arg name="3d_sensor"                       value="$(env TURTLEBOT_3D_SENSOR)"/>   <!-- kinect, asus_xtion_pro -->
+    <arg name="publish_tf"                      value="$(arg publish_camera_tf)"/>
+    <!-- We only need pointclouds to detect the blocks -->
+    <arg name="depth_registration"              value="true"/>
+    <arg name="rgb_processing"                  value="true"/>
+    <arg name="ir_processing"                   value="false"/>
+    <arg name="depth_processing"                value="true"/>
+    <arg name="depth_registered_processing"     value="true"/>
+    <arg name="disparity_processing"            value="false"/>
+    <arg name="disparity_registered_processing" value="false"/>
+    <arg name="scan_processing"                 value="false"/>
+  </include>
+
+  <!-- If we are not running the full robot, provide an arbitrary link between arm and 3D camera -->
+  <node if="$(arg publish_camera_tf)" pkg="tf" type="static_transform_publisher" name="link_arm_and_camera"
+                                     args="-0.211 -0.051 0.432 -0.000 0.712 0.020 /arm_base_link /camera_link 100"/>
+
+  <include file="$(find turtlebot_arm_block_manipulation)/launch/block_manipulation.launch" />
+
+  <node name="block_manipulation_demo" pkg="turtlebot_arm_block_manipulation" type="block_manipulation_demo" output="screen" >
+    <param name="arm_link" value="/arm_base_link" />
+    <param name="gripper_open" value="0.05" />
+    <param name="gripper_closed" value="0.022" />
+    <param name="z_up" value="0.05" />
+    <param name="table_height" value="-0.03" />
+    <param name="block_size" value="0.025" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_arm_block_manipulation)/demo/block_manipulation_demo.rviz" />
+</launch>

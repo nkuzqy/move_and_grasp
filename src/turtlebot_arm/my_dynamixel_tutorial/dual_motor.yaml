@@ -1,0 +1,14 @@
+dual_motor_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_torque_controller_dual_motor
+        type: JointTorqueControllerDualMotor
+    joint_name: dual_motor
+    joint_speed: 1.17
+    motor_master:
+        id: 1
+        init: 0
+        min: -2047
+        max: 2047
+    motor_slave:
+        id: 4

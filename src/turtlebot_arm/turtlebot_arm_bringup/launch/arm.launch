@@ -1,0 +1,22 @@
+<launch>
+  <!-- To use, first set Environment variable TURTLEBOT_ARM1 to either:
+   turtlebot or pincher (for Trossen PhantomX Pincher)
+   NOTE: passing arm_type as argument NOT yet fully supported! -->
+
+  <arg name="simulation" default="false"/>
+  <arg name="arm_type" default="$(optenv TURTLEBOT_ARM1 turtlebot)"/>
+
+   <!-- If using a real controller, look on /dev/ttyUSB0 by default -->
+   <arg name="port" default="/dev/ttyUSB0" />
+
+
+    <!-- Publish the robot state -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    	<param name="publish_frequency" value="20.0"/>
+    </node>
+
+
+ 
+
+  
+</launch>

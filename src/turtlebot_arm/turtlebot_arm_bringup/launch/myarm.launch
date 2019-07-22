@@ -1,0 +1,105 @@
+<launch>
+    <param name="/use_sim_time" value="false" />
+
+   <node name="dynamixel_manager" pkg="dynamixel_controllers"
+      type="controller_manager.py" required="true" output="screen">
+      <rosparam>
+         namespace: dxl_manager
+         serial_ports:
+            pan_tilt_port:
+               port_name: /dev/ttyUSB0
+               baud_rate: 1000000
+               min_motor_id: 1
+               max_motor_id: 5
+               update_rate: 20
+      </rosparam>
+   </node>
+   
+    <!-- Load the joint controller configuration from a YAML file -->
+    <rosparam file="$(find my_dynamixel_tutorial)/five.yaml" command="load"/>
+
+   <!-- Start the head pan and tilt controllers -->
+   <node name="dynamixel_controller_spawner_ax12" pkg="dynamixel_controllers"
+   type="controller_spawner.py"
+        args="--manager=dxl_manager
+              --port=pan_tilt_port
+              --type=simple
+        arm_shoulder_pan_joint                       
+        arm_shoulder_lift_joint
+        arm_elbow_flex_joint
+        arm_wrist_flex_joint
+        gripper_joint"
+        output="screen" />
+
+   <!-- Start the Dynamixel Joint States Publisher -->
+   <node name="dynamixel_joint_states_publisher" pkg="rbx1_dynamixels" type="dynamixel_joint_state_publisher.py" output="screen" />
+
+     <rosparam file="$(find my_dynamixel_tutorial)/joints_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                f_arm_controller
+                arm_shoulder_pan_joint                       
+                arm_shoulder_lift_joint
+                arm_elbow_flex_joint
+                arm_wrist_flex_joint
+               
+               "
+          output="screen"/>
+
+
+ <!-- Start joints trajectory controller controller -->
+    <rosparam file="$(find my_dynamixel_tutorial)/joints_trajectory_controller2.yaml" command="load"/>
+    <node name="controller_spawner_meta2" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                b_arm_controller
+                gripper_joint                       
+               "
+          output="screen"/>
+
+<!-- By default, we do not start a database (it can be large) -->
+  <arg name="db" default="false" />
+
+  <!-- Allow user to specify database location -->
+  <arg name="db_path" default="$(find turtlebot_arm_moveit_config)/default_warehouse_mongo_db" />
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- Load arm description, state and controllers in simulation mode -->
+  <!--<include file="$(find turtlebot_arm_bringup)/launch/arm.launch">
+    <arg name="simulation" value="true"/>
+  </include>-->
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include file="$(find turtlebot_arm_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="false"/>
+  </include>
+
+  <!-- If needed, broadcast static tf for robot root -->  
+
+  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find turtlebot_arm_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+<!-- Run Rviz and load the default config to see the state of the move_group node -->
+<!--
+  <include file="$(find turtlebot_arm_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+-->
+
+  <!-- If database loading was enabled, start mongodb as well -->
+<!--  
+<include file="$(find turtlebot_arm_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
+    <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
+  </include>
+-->
+   
+ 
+</launch>

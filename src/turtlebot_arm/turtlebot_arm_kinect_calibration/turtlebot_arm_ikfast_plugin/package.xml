@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='ASCII'?>
+<package>
+  <name>turtlebot_arm_ikfast_plugin</name>
+  <version>0.3.3</version>
+  <description>The turtlebot_arm_ikfast_plugin package</description>
+  <maintainer email="jsantossimon@gmail.com">Jorge Santos</maintainer>
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/turtlebot_arm_ikfast_plugin</url>
+  <url type="repository">https://github.com/turtlebot/turtlebot_arm</url>
+  <url type="bugtracker">https://github.com/turtlebot/turtlebot_arm/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>moveit_core</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>tf_conversions</build_depend>
+
+  <run_depend>cmake_modules</run_depend>
+  <run_depend>moveit_core</run_depend>
+  <run_depend>pluginlib</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>tf_conversions</run_depend>
+
+  <export>
+    <moveit_core plugin="${prefix}/turtlebot_arm_moveit_ikfast_plugin_description.xml"/>
+  </export>
+</package>

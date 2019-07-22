@@ -1,0 +1,27 @@
+<launch>
+  <arg name="publish_camera_tf" default="true"/>
+
+  <!--  *********** Bringup turtlebot arm *********** -->
+  <include file="$(find turtlebot_arm_bringup)/launch/arm.launch" />
+
+  <!--  ************ Bringup the camera ************* -->
+  <include file="$(find turtlebot_bringup)/launch/3dsensor.launch">
+    <arg name="camera"                          value="camera"/>
+    <arg name="3d_sensor"                       value="$(env TURTLEBOT_3D_SENSOR)"/>   <!-- kinect, asus_xtion_pro -->
+    <arg name="publish_tf"                      value="$(arg publish_camera_tf)"/>
+    <!-- We only need pointclouds to detect the blocks -->
+    <arg name="depth_registration"              value="true"/>
+  </include>
+
+  <!--  ************* Calibration stuff ************* -->
+  <node name="calibrate_kinect_checkerboard" pkg="turtlebot_arm_kinect_calibration" type="calibrate_kinect_checkerboard" output="screen">
+    <param name="gripper_tip_x" value="-0.002" />
+    <param name="gripper_tip_y" value="0.020" />
+    <param name="gripper_tip_z" value="-0.0185" />
+  </node>
+
+  <node name="checkerboard_image_view" pkg="image_view" type="image_view">
+    <remap from="image" to="/calibrate_kinect_checkerboard/calibration_pattern_out" />
+    <param name="autosize" value="true" />
+  </node>
+</launch>

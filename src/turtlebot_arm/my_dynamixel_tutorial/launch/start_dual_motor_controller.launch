@@ -1,0 +1,9 @@
+<launch>
+    <!-- Start dual_motor joint controller -->
+    <rosparam file="$(find my_dynamixel_tutorial)/dual_motor.yaml" command="load"/>
+    <node name="dual_motor_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                dual_motor_controller"
+          output="screen"/>
+</launch>

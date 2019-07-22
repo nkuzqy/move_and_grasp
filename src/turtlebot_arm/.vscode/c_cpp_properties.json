@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/kamerider/turtlebot_arm/devel/include",
+                "/home/kamerider/ws_moveit/devel/include",
+                "/home/kamerider/catkin_ws/devel/include",
+                "/home/kamerider/softwares/turtlebot/devel/include",
+                "/home/kamerider/softwares/kobuki/devel/include",
+                "/home/kamerider/softwares/rocon/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/kamerider/turtlebot_arm/src/my_dynamixel_tutorial/include",
+                "/home/kamerider/turtlebot_arm/src/turtlebot_arm_ikfast_plugin/include",
+                "/home/kamerider/turtlebot_arm/src/turtlebot_arm_kinect_calibration/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

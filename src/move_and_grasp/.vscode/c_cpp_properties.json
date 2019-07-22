@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/kamerider/kamerider_restaurant/devel/include",
+                "/home/kamerider/catkin_ws/devel/include",
+                "/home/kamerider/softwares/turtle_packages/turtlebot/devel/include",
+                "/home/kamerider/softwares/turtle_packages/kobuki/devel/include",
+                "/home/kamerider/softwares/turtle_packages/rocon/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/kamerider/catkin_ws/src/darknet_ros/darknet_ros/include",
+                "/home/kamerider/catkin_ws/src/hokuyo_node/include",
+                "/home/kamerider/catkin_ws/src/camera_umd/jpeg_streamer/include",
+                "/home/kamerider/catkin_ws/src/move_and_grasp/include",
+                "/home/kamerider/catkin_ws/src/kamerider_arm/my_dynamixel_tutorial/include",
+                "/home/kamerider/catkin_ws/src/kamerider_arm/turtlebot_arm_ikfast_plugin/include",
+                "/home/kamerider/catkin_ws/src/kamerider_arm/turtlebot_arm_kinect_calibration/include",
+                "/home/kamerider/catkin_ws/src/camera_umd/uvc_camera/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

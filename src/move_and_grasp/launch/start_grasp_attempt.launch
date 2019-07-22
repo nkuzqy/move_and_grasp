@@ -1,0 +1,9 @@
+<launch>
+    <!-- start arm with moveit node -->
+	<node pkg="turtlebot_arm_moveit_demos" type="moveit_ik_demos.py" name="moveit_ik_demos" launch-prefix="xterm -e" output="screen" />
+    <!-- start odom adjust node -->
+	<node pkg="move_and_grasp" type="odom_adjust_for_grasp.py" name="odom_adjust_for_grasp" launch-prefix="xterm -e" output="screen" />
+    <!-- start object_detection node -->
+	<node pkg="move_and_grasp" type="object_detection" name="object_detection" launch-prefix="xterm -e" output="screen" />
+
+</launch>

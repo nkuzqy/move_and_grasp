@@ -1,0 +1,10 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/kamerider/kamerider_restaurant/devel/lib/python2.7/dist-packages",
+        "/home/kamerider/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/home/kamerider/softwares/turtle_packages/turtlebot/devel/lib/python2.7/dist-packages",
+        "/home/kamerider/softwares/turtle_packages/kobuki/devel/lib/python2.7/dist-packages",
+        "/home/kamerider/softwares/turtle_packages/rocon/devel/lib/python2.7/dist-packages",
+        "/opt/ros/kinetic/lib/python2.7/dist-packages"
+    ]
+}
