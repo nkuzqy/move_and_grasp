@@ -83,7 +83,6 @@ class MoveItDemo:
         
         # Set target joint values for the arm: joints are in the order they appear in
         # the kinematic tree.
-        # joint_positions = [1, 1.274, 1.273, -0.003,0]
         joint_positions = [-0.06136, 0.358, 0.6034, 0.5471, 0.0]
 
         # Set the arm's goal configuration to the be the joint positions

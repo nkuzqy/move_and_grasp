@@ -94,6 +94,7 @@
   </include>
 -->
 
+
   <!-- If database loading was enabled, start mongodb as well -->
 <!--  
 <include file="$(find turtlebot_arm_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">

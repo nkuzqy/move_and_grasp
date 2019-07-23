@@ -28,7 +28,7 @@ from geometry_msgs.msg import Twist, Point, Quaternion
 import tf
 from rbx1_nav.transform_utils import quat_to_angle, normalize_angle
 from math import radians, copysign, sqrt, pow, pi
-from kamerider_image_msgs.msg import ObjectPosition
+from move_and_grasp.msg import ObjectPosition
 
 class OutAndBack():
     def __init__(self):
@@ -64,8 +64,12 @@ class OutAndBack():
         # Set the required position for arm to grasp
         # You can find the required_pos in the moveit_ik_demos.py
         self.required_pos = Point()
-        self.required_pos.x = 0.3756
-        self.required_pos.y  = 0.01619
+        # for ik demo
+        # self.required_pos.x = 0.3756
+        # self.required_pos.y  = 0.01619
+        # for fk  demo
+        self.required_pos.x = 0.348105493
+        self.required_pos.y  = 0.00053959
 
         # Initialize the tf listener
         self.tf_listener = tf.TransformListener()
@@ -96,8 +100,14 @@ class OutAndBack():
                 rospy.signal_shutdown("tf Exception")  
         
         #Compute the move distance
-        dis_x = target_pos.x - self.required_pos.x + 0.1
+        dis_x = target_pos.x - self.required_pos.x 
         dis_y = target_pos.y - self.required_pos.y
+        if dis_x > 0.75:
+	    print("dis_x > 0.75, pls shut down and try again")
+            dis_x = 0
+        if dis_y >0.75:
+            print("dis_y > 0.75, pls shut down and try again")
+            dis_y = 0
         
         # Initialize the position variable as a Point type
         position = Point()
