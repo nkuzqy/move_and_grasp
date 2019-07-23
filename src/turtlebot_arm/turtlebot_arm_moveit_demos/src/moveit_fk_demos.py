@@ -24,19 +24,28 @@
 import rospy, sys
 import moveit_commander
 from control_msgs.msg import GripperCommand
+from std_msgs.msg import String
 
 class MoveItDemo:
     def __init__(self):
+        # Initialize the ROS node
+        rospy.init_node('moveit_demo', anonymous=True)
+        rospy.Subscriber("/adjust_to_arm", String, self.navCallback)
+        self.arm_pub = rospy.Publisher("/arm_to_control", String, queue_size=1)
+        rospy.spin()
+        
+
+
+    def navCallback(self, msg):
+        if msg.data == 'start_grasp':
+            self.grasp_attempt()
+    def grasp_attempt(self):
         # Initialize the move_group API
         moveit_commander.roscpp_initialize(sys.argv)
 
-        # Initialize the ROS node
-        rospy.init_node('moveit_demo', anonymous=True)
-        
         GRIPPER_OPEN = [-0.3]
         GRIPPER_CLOSED = [0.3]
         GRIPPER_NEUTRAL = [0]
- 
         # Connect to the right_arm move group
         arm = moveit_commander.MoveGroupCommander('arm')
         
@@ -54,68 +63,69 @@ class MoveItDemo:
         gripper.set_goal_joint_tolerance(0.001)
         
         # Start the arm target in "resting" pose stored in the SRDF file
-        arm.set_named_target('right_up')
+        # arm.set_named_target('right_up')
         
         # Plan a trajectory to the goal configuration
-        traj = arm.plan()
-         
+        # traj = arm.plan()
+        
         # Execute the planned trajectory
-        arm.execute(traj)
+        # arm.execute(traj)
         
         # Pause for a moment
         rospy.sleep(1)
-         
+        
         # Set the gripper target to neutal position using a joint value target
         gripper.set_joint_value_target(GRIPPER_OPEN)
-         
+        
         # Plan and execute the gripper motion
         gripper.go()
         rospy.sleep(1)
-         
+        
         # Set target joint values for the arm: joints are in the order they appear in
         # the kinematic tree.
-        joint_positions = [1, 1.274, 1.273, -0.003,0]
- 
+        # joint_positions = [1, 1.274, 1.273, -0.003,0]
+        joint_positions = [-0.06136, 0.358, 0.6034, 0.5471, 0.0]
+
         # Set the arm's goal configuration to the be the joint positions
         arm.set_joint_value_target(joint_positions)
-                 
+                
         # Plan and execute the motion
         arm.go()
         rospy.sleep(1)
-         
+        
         # Save this configuration for later
         arm.remember_joint_values('saved_config', joint_positions)
-         
+        
         # Close the gripper as if picking something up
         gripper.set_joint_value_target(GRIPPER_CLOSED)
         gripper.go()
         rospy.sleep(1)
-                 
+                
         # Set the arm target to the named "straight_out" pose stored in the SRDF file
         arm.set_named_target('right_up')
-         
+        
         # Plan and execute the motion
         arm.go()
         rospy.sleep(1)
         rospy.loginfo("ARRIVING ")
-                  
+                
         # Set the goal configuration to the named configuration saved earlier
         arm.set_named_target('saved_config')
-         
+        
         # Plan and execute the motion
         arm.go()
         rospy.sleep(1)
-         
+        
         # Open the gripper as if letting something go
         gripper.set_joint_value_target(GRIPPER_OPEN)
         gripper.go()
         rospy.sleep(1)
-         
+        
         # Return the arm to the named "resting" pose stored in the SRDF file
         arm.set_named_target('resting')
         arm.go()
         rospy.sleep(1)
-         
+        
         # Return the gripper target to neutral position
         gripper.set_joint_value_target(GRIPPER_NEUTRAL)
         gripper.go()

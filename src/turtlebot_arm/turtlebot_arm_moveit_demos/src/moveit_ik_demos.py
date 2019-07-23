@@ -104,7 +104,7 @@ class MoveItDemo:
         target_pose.header.stamp = rospy.Time.now()     
         target_pose.pose.position.x = 0.3456
         target_pose.pose.position.y = 0.01619
-        target_pose.pose.position.z = 0.76166
+        target_pose.pose.position.z = 0.81166
         
         # Set the start state to the current state
         arm.set_start_state_to_current_state()
@@ -165,7 +165,7 @@ class MoveItDemo:
         
         # Execute the planned trajectory
         arm.execute(traj)
-        rospy.sleep(7)
+        rospy.sleep(4)
          
         # Return the gripper target to neutral position
         gripper.set_joint_value_target(GRIPPER_NEUTRAL)
