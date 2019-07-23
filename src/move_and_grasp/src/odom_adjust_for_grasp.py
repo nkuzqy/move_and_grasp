@@ -61,7 +61,7 @@ class OutAndBack():
         
         # Set the rotation angle to Pi radians (180 degrees)
         # goal_angle = pi
-        #Set the required position for arm to grasp
+        # Set the required position for arm to grasp
         # You can find the required_pos in the moveit_ik_demos.py
         self.required_pos = Point()
         self.required_pos.x = 0.3756
